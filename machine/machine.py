@@ -1,7 +1,7 @@
 import re
 from subprocess import Popen, PIPE
 import json
-
+from functools import reduce
 from docker.tls import TLSConfig
 from .helper import which
 
