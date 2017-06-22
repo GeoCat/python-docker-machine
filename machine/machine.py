@@ -242,12 +242,16 @@ class Machine:
             machine (str): the name of the machine
             force (bool): Remove local configuration even if machine cannot be removed
         Returns:
-            bool: True if successful
+            bool: True if successful, False if not
         """
         f = ["-f"] if force else []
         cmd = ["rm", "-y"] + f + [machine]
-        self._run(cmd)
-        return True
+        
+        errorMsg=self._run(cmd)[1]
+        if errorMsg:
+            return False
+        else:
+            return True
 
     def env(self, machine="default"):
         """
