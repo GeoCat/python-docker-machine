@@ -36,6 +36,7 @@ class Machine:
         error_code = p.returncode
         if raise_error and error_code:
             raise RuntimeError("cmd returned error %s: %s" % (error_code, stderr.decode('utf-8').strip()))
+        del p
         return stdout.decode('utf-8'), stderr.decode('utf-8'), error_code
 
     def _run_blocking(self, cmd, raise_error=True):
@@ -51,6 +52,7 @@ class Machine:
         p = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE)
         stdout, stderr = p.communicate()
         error_code = p.wait()
+        del p
 
         if raise_error and error_code:
             raise RuntimeError("cmd returned error %s: %s" % (error_code, stderr.decode('utf-8').strip()))
